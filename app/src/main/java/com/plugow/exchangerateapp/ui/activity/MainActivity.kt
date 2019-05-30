@@ -13,6 +13,7 @@ import com.plugow.exchangerateapp.viewModel.MainViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 import androidx.recyclerview.widget.SimpleItemAnimator
+import org.jetbrains.anko.toast
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -31,16 +32,27 @@ class MainActivity : DaggerAppCompatActivity() {
             list.layoutManager = LinearLayoutManager(this@MainActivity)
             (list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
-        viewModel.onResume()
+//        viewModel.onResume()
         viewModel.event.observe(this, Observer {
-            when(val event = it.getContentIfNotHandled()){
-            }
+            toast(getString(R.string.wrong))
         })
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopFethingRates()
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
         binding.list.adapter=null
+        viewModel.stopFethingRates()
     }
 
 }

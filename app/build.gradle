@@ -42,6 +42,7 @@ ext {
     android_binding = "2.2.0-alpha01"
     picasso_version = "2.71828"
     circle_image_version = "3.0.0"
+    rxbinding_version = "3.0.0-alpha2"
 }
 
 dependencies {
@@ -78,7 +79,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
-    implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0-alpha2'
+    implementation "com.jakewharton.rxbinding3:rxbinding-appcompat:$rxbinding_version"
 
     //anko
     implementation "org.jetbrains.anko:anko:$anko_version"

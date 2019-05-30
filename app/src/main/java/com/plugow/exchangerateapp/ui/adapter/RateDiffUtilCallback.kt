@@ -18,6 +18,6 @@ class RateDiffUtilCallback(private val newList: ArrayList<ERCurrency>, private v
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].rate == newList[newItemPosition].rate
+        return oldList[oldItemPosition].output == newList[newItemPosition].output
     }
 }

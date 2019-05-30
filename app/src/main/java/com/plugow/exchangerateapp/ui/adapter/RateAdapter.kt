@@ -12,10 +12,13 @@ import com.plugow.exchangerateapp.data.local.ERCurrency
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.rate_item.*
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class RateAdapter @Inject constructor() : BaseAdapter<ERCurrency>() {
     private val disposables = CompositeDisposable()
@@ -33,26 +36,34 @@ class RateAdapter @Inject constructor() : BaseAdapter<ERCurrency>() {
         viewHolder.currentRate.focusChanges()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                if (it){
-                    val pos =viewHolder.adapterPosition
-                    onRecyclerListener.onClick(RecyclerClickType.FOCUS_CHANGED, pos)
-                    if (pos != RecyclerView.NO_POSITION){
-                        val item = values[pos]
-                        values.removeAt(pos)
-                        values.add(0, item)
-                        notifyItemMoved(pos, 0)
+            .subscribeBy(
+                onNext = {
+                    if (it){
+                        val pos =viewHolder.adapterPosition
+                        onRecyclerListener.onClick(RecyclerClickType.FOCUS_CHANGED, pos)
+                        if (pos != RecyclerView.NO_POSITION){
+                            val item = values[pos]
+                            values.removeAt(pos)
+                            values.add(0, item)
+                            notifyItemMoved(pos, 0)
+                        }
                     }
                 }
-            }.addTo(disposables)
+            ).addTo(disposables)
 
         viewHolder.currentRate.textChanges()
+            .skip(1)
+            .filter { viewHolder.currentRate.isFocused }
+            .filter { viewHolder.currentRate.toString() != "" }
             .debounce(200, TimeUnit.MILLISECONDS)
-            .distinctUntilChanged()
-            .subscribe {
-                val pos =viewHolder.adapterPosition
-                onRecyclerListener.onClick(RecyclerClickType.VALUE_CHANGED, pos
-                )}.addTo(disposables)
+            .subscribeBy(
+                onNext = {
+                    val pos =viewHolder.adapterPosition
+                    if (pos != RecyclerView.NO_POSITION){
+                        values[pos].output=it.toString().toDoubleOrNull() ?: values[pos].output
+                        onRecyclerListener.onClick(RecyclerClickType.VALUE_CHANGED, pos)
+                    }
+                }).addTo(disposables)
 
         return viewHolder
     }
@@ -73,7 +84,8 @@ class RateAdapter @Inject constructor() : BaseAdapter<ERCurrency>() {
         override fun bind(item: ERCurrency) {
             shortName.text = item.code
             fullName.text = item.displayName
-            currentRate.setText(item.rate.toString())
+            val output = String.format(Locale.US, "%.2f", item.output)
+            currentRate.setText(output)
             flag.setImageResource(item.flagResource)
 
         }

@@ -5,7 +5,7 @@ import androidx.annotation.DrawableRes
 import com.plugow.exchangerateapp.util.getDrawableRes
 import java.util.*
 
-class ERCurrency(ctx: Context, val code: String, val rate:Double) {
+data class ERCurrency(val ctx: Context, val code: String, val rate:Double, var output:Double) {
 
     val displayName: String
 
