@@ -12,27 +12,35 @@ import com.plugow.exchangerateapp.ui.adapter.RateAdapter
 import com.plugow.exchangerateapp.viewModel.MainViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
+import androidx.recyclerview.widget.SimpleItemAnimator
 
 
 class MainActivity : DaggerAppCompatActivity() {
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject lateinit var adapter:RateAdapter
     private lateinit var viewModel: MainViewModel
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
-        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main).apply {
+        binding=DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main).apply {
             lifecycleOwner = this@MainActivity
             viewModel = this@MainActivity.viewModel
             list.adapter = adapter
             list.layoutManager = LinearLayoutManager(this@MainActivity)
+            (list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
         viewModel.onResume()
         viewModel.event.observe(this, Observer {
             when(val event = it.getContentIfNotHandled()){
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.list.adapter=null
     }
 
 }

@@ -1,7 +1,9 @@
 package com.plugow.exchangerateapp.ui.adapter
 
 enum class RecyclerClickType : ClickType {
-    MAIN
+    MAIN,
+    FOCUS_CHANGED,
+    VALUE_CHANGED
 }
 
 interface ClickType

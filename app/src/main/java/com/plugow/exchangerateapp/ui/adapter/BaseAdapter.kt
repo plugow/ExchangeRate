@@ -3,13 +3,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
-    protected var values: ArrayList<T> = arrayListOf()
-    protected lateinit var onRecyclerListener:OnRecyclerListener
+    var values: ArrayList<T> = arrayListOf()
+    lateinit var onRecyclerListener:OnRecyclerListener
 
-    fun setData(items: List<T>) {
-        values =items as ArrayList<T>
-        notifyDataSetChanged()
-    }
+    abstract fun setData(items:List<T>)
 
     fun setListener(listener: OnRecyclerListener){
         onRecyclerListener = listener
