@@ -32,7 +32,6 @@ class MainActivity : DaggerAppCompatActivity() {
             list.layoutManager = LinearLayoutManager(this@MainActivity)
             (list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
-//        viewModel.onResume()
         viewModel.event.observe(this, Observer {
             toast(getString(R.string.wrong))
         })

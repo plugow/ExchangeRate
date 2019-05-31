@@ -11,7 +11,7 @@ class ExchangeRateApp : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-//        RxJavaPlugins.setErrorHandler {}
+        RxJavaPlugins.setErrorHandler {}
     }
 
 }
