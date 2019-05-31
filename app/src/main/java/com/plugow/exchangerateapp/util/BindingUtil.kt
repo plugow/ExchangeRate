@@ -1,14 +1,11 @@
 package com.plugow.exchangerateapp.util
 
 import android.content.Context
-import android.widget.TextView
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.plugow.exchangerateapp.ui.adapter.BaseAdapter
 import com.plugow.exchangerateapp.ui.adapter.OnRecyclerListener
-import org.jetbrains.anko.textColorResource
 import java.util.*
 
 
@@ -29,12 +26,6 @@ fun setRecyclerListener(recyclerView: RecyclerView, onRecyclerListener: OnRecycl
     }
 }
 
-@BindingAdapter("color")
-fun setBackground(view: TextView, @ColorRes color:Int?) {
-    color?.let {
-        view.textColorResource = color
-    }
-}
 
 @DrawableRes
 fun Currency.getDrawableRes(context: Context): Int =
