@@ -40,7 +40,6 @@ ext {
     rxkotlin_version = "2.2.0"
     dagger_version = "2.16"
     android_binding = "2.2.0-alpha01"
-    picasso_version = "2.71828"
     circle_image_version = "3.0.0"
     rxbinding_version = "3.0.0-alpha2"
 }
@@ -91,8 +90,7 @@ dependencies {
     testImplementation "android.arch.core:core-testing:$android_binding"
     androidTestImplementation "android.arch.core:core-testing:$android_binding"
 
-    //picasso
-    implementation "com.squareup.picasso:picasso:$picasso_version"
+    //circle image
     implementation "de.hdodenhof:circleimageview:$circle_image_version"
 
 }
