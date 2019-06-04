@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(private val service: ApiService, private val ctx:Context): ViewModel() {
-    var items: MutableLiveData<List<ERCurrency>> = MutableLiveData()
+    val items: MutableLiveData<List<ERCurrency>> = MutableLiveData()
     private val disposables= CompositeDisposable()
     private val mEvent:MutableLiveData<Event<Any>> = MutableLiveData()
     val event : LiveData<Event<Any>>
@@ -28,7 +28,6 @@ class MainViewModel @Inject constructor(private val service: ApiService, private
 
     fun onResume(){
         Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onNext = {loadItems()},

@@ -56,6 +56,8 @@ class RateAdapter @Inject constructor() : BaseAdapter<ERCurrency>() {
             .filter { viewHolder.currentRate.isFocused }
             .filter { viewHolder.currentRate.toString() != "" }
             .debounce(200, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onNext = {
                     val pos =viewHolder.adapterPosition
