@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder
 import com.plugow.exchangerateapp.data.remote.ApiService
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -18,7 +17,7 @@ object ApiModule {
     const val BASE_URL = "https://revolut.duckdns.org/"
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun providesGson(): Gson {
         return GsonBuilder().create()
@@ -32,21 +31,21 @@ object ApiModule {
     }
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun providesGsonConverterFactory(gson: Gson): GsonConverterFactory {
         return GsonConverterFactory.create(gson)
     }
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun providesRx2JavaCallAdapterFactory(): RxJava2CallAdapterFactory {
         return RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
     }
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun providesRetrofit(gsonConverterFactory: GsonConverterFactory, okHttpClient: OkHttpClient,
                                   rxJava2CallAdapterFactory: RxJava2CallAdapterFactory): Retrofit {
@@ -58,7 +57,7 @@ object ApiModule {
     }
 
     @Provides
-    @Reusable
+    @Singleton
     @JvmStatic
     internal fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create<ApiService>(ApiService::class.java)
