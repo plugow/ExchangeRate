@@ -44,14 +44,14 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        viewModel.stopFethingRates()
+        viewModel.stopFetchingRates()
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
         binding.list.adapter=null
-        viewModel.stopFethingRates()
+        viewModel.stopFetchingRates()
     }
 
 }

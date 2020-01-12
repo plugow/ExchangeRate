@@ -36,7 +36,7 @@ class MainViewModel @Inject constructor(private val service: ApiService, private
             .addTo(disposables)
     }
 
-    fun stopFethingRates(){
+    fun stopFetchingRates(){
         disposables.clear()
     }
 
@@ -55,7 +55,7 @@ class MainViewModel @Inject constructor(private val service: ApiService, private
 
     fun onRecyclerClick(type: ClickType, pos: Int) {
         when(type){
-            RecyclerClickType.FOCUS_CHANGED -> stopFethingRates()
+            RecyclerClickType.FOCUS_CHANGED -> stopFetchingRates()
             RecyclerClickType.VALUE_CHANGED -> updateRates(pos)
         }
     }

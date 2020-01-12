@@ -38,7 +38,7 @@ ext {
     rxjava_version = "2.1.16"
     rxandroid_version = "2.0.2"
     rxkotlin_version = "2.2.0"
-    dagger_version = "2.16"
+    dagger_version = "2.24"
     android_binding = "2.2.0-alpha01"
     circle_image_version = "3.0.0"
     rxbinding_version = "3.0.0-alpha2"
